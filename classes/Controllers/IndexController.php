@@ -51,6 +51,7 @@ use Ecjia\Component\ApiServer\Responses\ApiManager;
 use Ecjia\Component\ApiServer\Responses\ApiResponse;
 use Ecjia\Component\ApiSignature\ApiSignatureManager;
 use Ecjia\System\BaseController\BasicController;
+use RC_Hook;
 use RC_Loader;
 
 class IndexController extends BasicController
@@ -90,8 +91,14 @@ class IndexController extends BasicController
             'api_not_handle',
             'api_not_instanceof',
         ])) {
-            $error_desc = array_get($data, 'status.error_desc');
-            $response->setOriginalContent($error_desc);
+
+            if (RC_Hook::has_filter($url)) {
+                $response = RC_Hook::apply_filters($url, $response);
+            } else {
+                $error_desc = array_get($data, 'status.error_desc');
+                $response->setOriginalContent($error_desc);
+            }
+
         }
 
         $server = $request->server(null, []);
