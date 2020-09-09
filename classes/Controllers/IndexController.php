@@ -94,6 +94,7 @@ class IndexController extends BasicController
 
             if (RC_Hook::has_filter($url)) {
                 $response = RC_Hook::apply_filters($url, $response);
+                $response = new ApiResponse($response);
             } else {
                 $error_desc = array_get($data, 'status.error_desc');
                 $response->setOriginalContent($error_desc);
