@@ -46,7 +46,6 @@
 //
 namespace Ecjia\App\Api\Controllers;
 
-use Ecjia\App\Api\Jobs\TestDumpJob;
 use Ecjia\Component\ApiServer\Responses\ApiManager;
 use Ecjia\Component\ApiServer\Responses\ApiResponse;
 use Ecjia\Component\ApiSignature\ApiSignatureManager;
@@ -63,6 +62,8 @@ class IndexController extends BasicController
         ini_set('memory_limit', -1);
 
         RC_Loader::load_app_func('functions');
+
+        $this->middleware(config('app-api::middlewares'));
 
     }
 
@@ -101,13 +102,6 @@ class IndexController extends BasicController
             }
 
         }
-
-        $server = $request->server(null, []);
-        $header = $request->header(null, []);
-        $query  = $request->query(null, []);
-        $data   = array_merge($server, $header, $query);
-
-        TestDumpJob::dispatch($data);
 
         royalcms()->instance('response', $response);
         return $response;
