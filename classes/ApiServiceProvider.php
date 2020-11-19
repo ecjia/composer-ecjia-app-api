@@ -70,6 +70,7 @@ class ApiServiceProvider extends AppParentServiceProvider
             'api',
             'storeapi',
             'adminapi',
+            'cashierapi',
         ];
 
         if (in_array($this->royalcms->currentSite(), $allow_display_sites)) {
