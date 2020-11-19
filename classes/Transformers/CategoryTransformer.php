@@ -62,11 +62,11 @@ class CategoryTransformer extends Transformer
     {
 
         $outData = array(
-            "id"        => 12,
-            "name"      => __('分类名称', 'api'),
-            "children"  => array(
-                'id'    =>  13,
-                'name'  => 'ssss'
+            "id"       => 12,
+            "name"     => __('分类名称', 'api'),
+            "children" => array(
+                'id'   => 13,
+                'name' => 'ssss'
             )
         );
 

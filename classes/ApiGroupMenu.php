@@ -26,7 +26,7 @@ class ApiGroupMenu extends RC_Object
     public function getMenus()
     {
 
-        $menus = collect($this->menus)->map(function($admin_menu, $key) {
+        $menus = collect($this->menus)->map(function ($admin_menu, $key) {
             /**
              * @var AdminMenu $admin_menu
              */
@@ -35,12 +35,11 @@ class ApiGroupMenu extends RC_Object
                 if ($admin_menu->has_submenus) {
 
                     if ($admin_menu->has_submenus()) {
-                        collect($admin_menu->submenus())->map(function($sub_menu) use ($admin_menu) {
+                        collect($admin_menu->submenus())->map(function ($sub_menu) use ($admin_menu) {
 
                             if ($this->checkAdminMenuPrivilege($sub_menu)) {
                                 return $sub_menu;
-                            }
-                            else {
+                            } else {
                                 $admin_menu->remove_submenu($sub_menu);
                             }
 
@@ -48,18 +47,15 @@ class ApiGroupMenu extends RC_Object
                         });
 
                         return $admin_menu;
-                    }
-                    else {
+                    } else {
                         return null;
                     }
 
-                }
-                else {
+                } else {
                     return $admin_menu;
                 }
 
-            }
-            else {
+            } else {
                 return null;
             }
 

@@ -20,9 +20,9 @@ class AdminHookSubscriber
     {
         $menus = ApiGroupMenu::singleton()->getMenus();
 
-        echo '<div class="setting-group">'.PHP_EOL;
-        echo '<span class="setting-group-title"><i class="fontello-icon-cog"></i>API组</span>'.PHP_EOL;
-        echo '<ul class="nav nav-list m_t10">'.PHP_EOL;
+        echo '<div class="setting-group">' . PHP_EOL;
+        echo '<span class="setting-group-title"><i class="fontello-icon-cog"></i>API组</span>' . PHP_EOL;
+        echo '<ul class="nav nav-list m_t10">' . PHP_EOL;
 
         foreach ($menus as $key => $group) {
             if ($group->action == 'divider') {
@@ -36,12 +36,12 @@ class AdminHookSubscriber
                     echo ' llv-active';
                 }
 
-                echo '" href="' . $group->link . '">' . $group->name . '</a></li>'.PHP_EOL;
+                echo '" href="' . $group->link . '">' . $group->name . '</a></li>' . PHP_EOL;
             }
         }
 
-        echo '</ul>'.PHP_EOL;
-        echo '</div>'.PHP_EOL;
+        echo '</ul>' . PHP_EOL;
+        echo '</div>' . PHP_EOL;
     }
 
 

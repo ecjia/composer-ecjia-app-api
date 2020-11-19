@@ -76,7 +76,7 @@ class AdminController extends EcjiaAdminController
 
         $apis = array_get($apis, $code);
 
-        $this->assign('current_code',   $code);
+        $this->assign('current_code', $code);
 
         $this->assign('ur_here', __('API管理', 'api'));
 

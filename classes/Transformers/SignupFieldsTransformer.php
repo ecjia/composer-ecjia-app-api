@@ -62,9 +62,9 @@ class SignupFieldsTransformer extends Transformer
     {
 
         $outData = array(
-            "id"    => 12,
-            "name"  => __('说明', 'api'),
-            "need"  => 0
+            "id"   => 12,
+            "name" => __('说明', 'api'),
+            "need" => 0
         );
 
         return $outData;

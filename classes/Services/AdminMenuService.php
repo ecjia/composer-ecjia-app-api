@@ -1,4 +1,5 @@
 <?php
+
 namespace Ecjia\App\Api\Services;
 
 use ecjia_admin;
@@ -14,9 +15,9 @@ class AdminMenuService
      * @param $options
      * @return mixed
      */
-	public function handle(& $options)
-	{	
-		$menus = ecjia_admin::make_admin_menu('api_manage', __('API管理', 'api'), '', 20);
+    public function handle(&$options)
+    {
+        $menus = ecjia_admin::make_admin_menu('api_manage', __('API管理', 'api'), '', 20);
 
         $submenus = array(
             ecjia_admin::make_admin_menu('api_manage_list', __('API管理', 'api'), RC_Uri::url('api/admin/init'), 20)->add_purview('api_manage'),
@@ -24,8 +25,8 @@ class AdminMenuService
 
         $menus->add_submenu($submenus);
 
-		return $menus;
-	}
+        return $menus;
+    }
 }
 
 // end

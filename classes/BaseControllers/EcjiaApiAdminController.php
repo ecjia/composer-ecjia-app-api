@@ -58,13 +58,13 @@ use ecjia_error;
 abstract class EcjiaApiAdminController extends EcjiaApi
 {
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
 
         $this->authSession();
-        
-	}
+
+    }
 
     protected function registerServiceProvider()
     {
@@ -74,7 +74,7 @@ abstract class EcjiaApiAdminController extends EcjiaApi
     }
 
 
-	protected function session_start()
+    protected function session_start()
     {
         if ($this->api_driver == 'local') {
             return null;
@@ -87,17 +87,17 @@ abstract class EcjiaApiAdminController extends EcjiaApi
         RC_Hook::add_filter('royalcms_session_id', function ($sessin_id) {
             return RC_Hook::apply_filters('ecjia_api_session_id', $sessin_id);
         });
-	
-		RC_Session::start();
-	}
 
-	/**
-	 * 登录session授权
-	 */
-	public function authSession()
+        RC_Session::start();
+    }
+
+    /**
+     * 登录session授权
+     */
+    public function authSession()
     {
 
-	}
+    }
 
     /**
      * 管理员登录授权验证
@@ -110,10 +110,11 @@ abstract class EcjiaApiAdminController extends EcjiaApi
     /**
      * 判断管理员对某一个操作是否有权限。
      * 根据当前对应的action_code，然后再和用户session里面的action_list做匹配，以此来决定是否可以继续执行。
-     * @param     string    $priv_str    操作对应的priv_str
+     * @param string $priv_str 操作对应的priv_str
      * @return bool | ecjia_error
      */
-    public function admin_priv($priv_str) {
+    public function admin_priv($priv_str)
+    {
         if (session('action_list') == 'all') {
             return true;
         }
@@ -128,10 +129,10 @@ abstract class EcjiaApiAdminController extends EcjiaApi
     /**
      * 设置管理员的session内容
      *
-     * @param   integer $user_id        管理员编号
-     * @param   string  $user_name       管理员姓名
-     * @param   string  $action_list    权限列表
-     * @param   string  $last_time      最后登录时间
+     * @param integer $user_id 管理员编号
+     * @param string $user_name 管理员姓名
+     * @param string $action_list 权限列表
+     * @param string $last_time 最后登录时间
      * @return  void
      */
     public function admin_session($user_id, $username, $action_list, $last_time, $mobile = '', $email = '')
@@ -146,7 +147,7 @@ abstract class EcjiaApiAdminController extends EcjiaApi
         RC_Session::set('session_user_id', $user_id);
         RC_Session::set('session_user_type', 'merchant');
     }
-	
+
 }
 
 // end

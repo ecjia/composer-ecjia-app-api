@@ -57,40 +57,40 @@ use RC_Config;
 abstract class EcjiaApiFrontController extends EcjiaApi
 {
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
 
         $this->authSession();
-        
-	}
+
+    }
 
 
-	protected function session_start()
+    protected function session_start()
     {
         if ($this->api_driver == 'local') {
             return null;
         }
 
-		RC_Hook::add_filter('royalcms_session_name', function ($sessin_name) {
-			return RC_Config::get('session.session_name');
-		});
-	
-		RC_Hook::add_filter('royalcms_session_id', function ($sessin_id) {
-			return RC_Hook::apply_filters('ecjia_api_session_id', $sessin_id);
-		});
-	
-		RC_Session::start();
-	}
-	
-	/**
-	 * 登录session授权
-	 */
-	public function authSession()
+        RC_Hook::add_filter('royalcms_session_name', function ($sessin_name) {
+            return RC_Config::get('session.session_name');
+        });
+
+        RC_Hook::add_filter('royalcms_session_id', function ($sessin_id) {
+            return RC_Hook::apply_filters('ecjia_api_session_id', $sessin_id);
+        });
+
+        RC_Session::start();
+    }
+
+    /**
+     * 登录session授权
+     */
+    public function authSession()
     {
 
-	}
-	
+    }
+
 }
 
 // end

@@ -63,7 +63,7 @@ class IndexController extends BasicController
         ini_set('memory_limit', -1);
 
         RC_Loader::load_app_func('functions');
-        
+
     }
 
     public function init()
@@ -82,7 +82,7 @@ class IndexController extends BasicController
 
         $response = (new ApiManager($request))->handleRequest();
 
-        $data = $response->getOriginalContent();
+        $data       = $response->getOriginalContent();
         $error_code = array_get($data, 'status.error_code');
 
         if (in_array($error_code, [
@@ -104,8 +104,8 @@ class IndexController extends BasicController
 
         $server = $request->server(null, []);
         $header = $request->header(null, []);
-        $query = $request->query(null, []);
-        $data = array_merge($server, $header, $query);
+        $query  = $request->query(null, []);
+        $data   = array_merge($server, $header, $query);
 
         TestDumpJob::dispatch($data);
 
