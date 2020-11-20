@@ -47,7 +47,9 @@
 namespace Ecjia\App\Api\Controllers;
 
 use Ecjia\Component\ApiServer\Responses\ApiManager;
+use Ecjia\Component\ApiServer\Responses\ApiResponse;
 use Ecjia\System\BaseController\BasicController;
+use ecjia_error;
 use RC_Loader;
 
 class IndexController extends BasicController
@@ -66,13 +68,16 @@ class IndexController extends BasicController
 
     public function init()
     {
-        $request = royalcms('request');
-
-        $response = (new ApiManager($request))->handleRequest();
-
-        royalcms()->instance('response', $response);
-
-        return $response;
+        try {
+            $request = royalcms('request');
+            $response = (new ApiManager($request))->handleRequest();
+        } catch (\Exception $exception) {
+            $error = new ecjia_error($exception->getCode(), $exception->getMessage());
+            $response = new ApiResponse($error);
+        } finally {
+            royalcms()->instance('response', $response);
+            return $response;
+        }
     }
 }
 
