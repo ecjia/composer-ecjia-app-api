@@ -47,10 +47,7 @@
 namespace Ecjia\App\Api\Controllers;
 
 use Ecjia\Component\ApiServer\Responses\ApiManager;
-use Ecjia\Component\ApiServer\Responses\ApiResponse;
-use Ecjia\Component\ApiSignature\ApiSignatureManager;
 use Ecjia\System\BaseController\BasicController;
-use RC_Hook;
 use RC_Loader;
 
 class IndexController extends BasicController
@@ -71,39 +68,10 @@ class IndexController extends BasicController
     {
         $request = royalcms('request');
 
-        $url = $request->get('url');
-
-        // Api signature checking...
-        $error = (new ApiSignatureManager())->checkSignature($url);
-        if (is_ecjia_error($error)) {
-            $response = new ApiResponse($error);
-            royalcms()->instance('response', $response);
-            return $response;
-        }
-
         $response = (new ApiManager($request))->handleRequest();
 
-        $data       = $response->getOriginalContent();
-        $error_code = array_get($data, 'status.error_code');
-
-        if (in_array($error_code, [
-            'url_param_not_exists',
-            'api_not_exists',
-            'api_not_handle',
-            'api_not_instanceof',
-        ])) {
-
-            if (RC_Hook::has_filter($url)) {
-                $response = RC_Hook::apply_filters($url, $response);
-                $response = new ApiResponse($response);
-            } else {
-                $error_desc = array_get($data, 'status.error_desc');
-                $response->setOriginalContent($error_desc);
-            }
-
-        }
-
         royalcms()->instance('response', $response);
+
         return $response;
     }
 }
