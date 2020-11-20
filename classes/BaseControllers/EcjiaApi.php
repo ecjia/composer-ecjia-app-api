@@ -155,6 +155,14 @@ abstract class EcjiaApi extends EcjiaController
     }
 
     /**
+     * 创建模板视图
+     */
+    public function create_view()
+    {
+        //不实现
+    }
+
+    /**
      * 加载hook文件
      */
     protected function load_hooks()
