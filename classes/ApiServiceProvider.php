@@ -101,6 +101,7 @@ class ApiServiceProvider extends AppParentServiceProvider
             'ecjia_api'         => 'Ecjia\App\Api\BaseControllers\EcjiaApi',
             'api_front'         => 'Ecjia\App\Api\BaseControllers\EcjiaApiFrontController',
             'api_admin'         => 'Ecjia\App\Api\BaseControllers\EcjiaApiAdminController',
+            'api_merchant'      => 'Ecjia\App\Api\BaseControllers\EcjiaApiMerchantController',
             'ecjia_api_manager' => 'Ecjia\App\Api\LocalRequest\ApiManager',
             'ecjia_api_const'   => 'Ecjia\App\Api\LocalRequest\ApiConst',
             'api_interface'     => 'Ecjia\Component\ApiServer\Contracts\ApiHandler'
