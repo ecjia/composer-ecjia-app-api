@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecjia\App\Api\User;
+namespace Ecjia\App\Api\BaseControllers\User;
 
 use RC_Session;
 

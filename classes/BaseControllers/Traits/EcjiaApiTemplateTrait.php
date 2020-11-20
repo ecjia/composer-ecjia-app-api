@@ -1,6 +1,6 @@
 <?php
 
-namespace Ecjia\App\Api\Traits;
+namespace Ecjia\App\Api\BaseControllers\Traits;
 
 use ecjia_view;
 
