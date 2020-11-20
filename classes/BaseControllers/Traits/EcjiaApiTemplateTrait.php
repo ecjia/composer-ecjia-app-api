@@ -21,19 +21,23 @@ trait EcjiaApiTemplateTrait
 
     /**
      * 获得模板目录
-     * @return string
+     * @return string|null
      */
     public function get_template_dir()
     {
         //不需要实现
+        return null;
     }
 
     /**
      * 获得模板文件
+     * @param string $file
+     * @return  string|null
      */
     public function get_template_file($file)
     {
         //不需要实现
+        return null;
     }
 
 }

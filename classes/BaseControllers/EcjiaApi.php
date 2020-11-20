@@ -80,6 +80,9 @@ abstract class EcjiaApi extends EcjiaController
      */
     protected $api_version = null;
 
+    /**
+     * @var null
+     */
     protected $api_driver = null;
 
     public function __construct()
