@@ -46,6 +46,8 @@
 //
 namespace Ecjia\App\Api\BaseControllers;
 
+use Ecjia\App\Api\BaseControllers\Traits\EcjiaApiTemplateTrait;
+use Ecjia\Component\Contracts\EcjiaTemplateFileLoader;
 use RC_Hook;
 use RC_Session;
 use RC_Config;
@@ -54,8 +56,9 @@ use RC_Config;
  * api_front
  * @author will
  */
-abstract class EcjiaApiFrontController extends EcjiaApi
+abstract class EcjiaApiFrontController extends EcjiaApi implements EcjiaTemplateFileLoader
 {
+    use EcjiaApiTemplateTrait;
 
     public function __construct()
     {

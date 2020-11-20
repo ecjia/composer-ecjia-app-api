@@ -53,14 +53,12 @@ namespace Ecjia\App\Api\BaseControllers;
 use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\App\Api\Transformers\Transformer;
 use Ecjia\System\BaseController\EcjiaController;
-use Ecjia\Component\Contracts\EcjiaTemplateFileLoader;
 use RC_Hook;
-use ecjia_view;
 use ecjia_app;
 use RC_Loader;
 use RC_Api;
 
-abstract class EcjiaApi extends EcjiaController implements EcjiaTemplateFileLoader
+abstract class EcjiaApi extends EcjiaController
 {
     /**
      * @var array
@@ -114,18 +112,6 @@ abstract class EcjiaApi extends EcjiaController implements EcjiaTemplateFileLoad
     }
 
     /**
-     * @return ecjia_view
-     */
-    public function create_view()
-    {
-        if ($this->api_driver == 'local') {
-            return null;
-        }
-
-        return new ecjia_view($this);
-    }
-
-    /**
      * 加载hook文件
      */
     protected function load_hooks()
@@ -143,23 +129,6 @@ abstract class EcjiaApi extends EcjiaController implements EcjiaTemplateFileLoad
                 royalcms('Royalcms\Component\Hook\Dispatcher')->subscribe($class);
             }
         });
-    }
-
-    /**
-     * 获得模板目录
-     * @return string
-     */
-    public function get_template_dir()
-    {
-        //不需要实现
-    }
-
-    /**
-     * 获得模板文件
-     */
-    public function get_template_file($file)
-    {
-        //不需要实现
     }
 
     /**
