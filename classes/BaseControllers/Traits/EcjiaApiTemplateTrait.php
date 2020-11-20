@@ -12,7 +12,7 @@ trait EcjiaApiTemplateTrait
      */
     public function create_view()
     {
-        if ($this->api_driver == 'local') {
+        if ($this->getApiDriver() == 'local') {
             return null;
         }
 

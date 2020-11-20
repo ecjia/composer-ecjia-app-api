@@ -99,6 +99,46 @@ abstract class EcjiaApi extends EcjiaController
         RC_Hook::do_action('ecjia_api_finish_launching');
     }
 
+    /**
+     * @return array
+     */
+    public function getRequestData(): array
+    {
+        return $this->requestData;
+    }
+
+    /**
+     * @return null
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDevice(): array
+    {
+        return $this->device;
+    }
+
+    /**
+     * @return null
+     */
+    public function getApiVersion()
+    {
+        return $this->api_version;
+    }
+
+    /**
+     * @return null
+     */
+    public function getApiDriver()
+    {
+        return $this->api_driver;
+    }
+
     protected function registerServiceProvider()
     {
         parent::registerServiceProvider();
