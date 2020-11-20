@@ -50,10 +50,10 @@
 
 namespace Ecjia\App\Api\BaseControllers;
 
+use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\App\Api\Transformers\Transformer;
 use Ecjia\System\BaseController\EcjiaController;
 use Ecjia\Component\Contracts\EcjiaTemplateFileLoader;
-use RC_Config;
 use RC_Hook;
 use ecjia_view;
 use ecjia_app;
@@ -110,16 +110,7 @@ abstract class EcjiaApi extends EcjiaController implements EcjiaTemplateFileLoad
      */
     protected function visitorSession()
     {
-        if (empty($_SESSION['user_id'])) {
-            $_SESSION['user_id']   = 0;
-            $_SESSION['user_name'] = '';
-            $_SESSION['email']     = '';
-            $_SESSION['user_rank'] = 0;
-            $_SESSION['discount']  = 1.00;
-            if (!isset($_SESSION['login_fail'])) {
-                $_SESSION['login_fail'] = 0;
-            }
-        }
+        (new VisitorUserSession)->resetSession();
     }
 
     /**
@@ -140,11 +131,18 @@ abstract class EcjiaApi extends EcjiaController implements EcjiaTemplateFileLoad
     protected function load_hooks()
     {
         $apps = ecjia_app::installed_app_floders();
-        if (is_array($apps)) {
-            foreach ($apps as $app) {
-                RC_Loader::load_app_class('hooks.api_' . $app, $app, false);
+
+        collect($apps)->map(function ($app) {
+            //loading hooks
+            RC_Loader::load_app_class('hooks.api_' . $app, $app, false);
+
+            //loading subscriber
+            $bundle = royalcms('app')->driver($app);
+            $class = $bundle->getNamespace() . '\Subscribers\ApiHookSubscriber';
+            if (class_exists($class)) {
+                royalcms('Royalcms\Component\Hook\Dispatcher')->subscribe($class);
             }
-        }
+        });
     }
 
     /**
