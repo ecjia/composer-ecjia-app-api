@@ -50,8 +50,8 @@
 
 namespace Ecjia\App\Api\BaseControllers;
 
-use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\App\Api\Transformers\Transformer;
+use Ecjia\App\Api\User\VisitorUserSession;
 use Ecjia\System\BaseController\EcjiaController;
 use RC_Hook;
 use ecjia_app;

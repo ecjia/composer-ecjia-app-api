@@ -46,7 +46,7 @@
 //
 namespace Ecjia\App\Api\BaseControllers;
 
-use Ecjia\App\Api\BaseControllers\Traits\EcjiaApiTemplateTrait;
+use Ecjia\App\Api\Traits\EcjiaApiTemplateTrait;
 use Ecjia\Component\Contracts\EcjiaTemplateFileLoader;
 use RC_Hook;
 use RC_Session;
