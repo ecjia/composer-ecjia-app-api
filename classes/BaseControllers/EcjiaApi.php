@@ -54,11 +54,12 @@ use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\App\Api\Events\ApiLocalRequestEvent;
 use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
 use Ecjia\App\Api\Transformers\Transformer;
+use Ecjia\Component\ApiServer\Responses\ApiError;
+use Ecjia\Component\ApiServer\Responses\ApiResponse;
 use Ecjia\System\BaseController\EcjiaController;
 use RC_Hook;
 use ecjia_app;
 use RC_Loader;
-use RC_Api;
 
 abstract class EcjiaApi extends EcjiaController
 {
@@ -332,6 +333,25 @@ abstract class EcjiaApi extends EcjiaController
         return Transformer::transformerData($type, $data);
     }
 
+    /**
+     * 拦截API错误请求，转换为API统一响应
+     * @return ApiResponse
+     */
+    public function handleRequest()
+    {
+        $response = $this->handle();
+        if (is_ecjia_error($response)) {
+            return new ApiResponse(new ApiError($response));
+        }
+
+        return $response;
+    }
+
+    /**
+     * API业务处理
+     * @return mixed
+     */
+    abstract public function handle();
 
 }
 
