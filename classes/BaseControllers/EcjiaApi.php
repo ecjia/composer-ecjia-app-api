@@ -51,6 +51,8 @@
 namespace Ecjia\App\Api\BaseControllers;
 
 use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
+use Ecjia\App\Api\Events\ApiLocalRequestEvent;
+use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
 use Ecjia\App\Api\Transformers\Transformer;
 use Ecjia\System\BaseController\EcjiaController;
 use RC_Hook;
@@ -188,28 +190,29 @@ abstract class EcjiaApi extends EcjiaController
 
     protected function apiRequestProcess()
     {
-        $request = royalcms('request');
 
-        $json     = $request->input('json');
+        $json     = $this->request->input('json');
         $jsonData = json_decode($json, true);
         if (empty($jsonData)) {
             $jsonData = [];
         }
 
-        $this->requestData = array_merge($request->input(), $jsonData);
+        $this->requestData = array_merge($this->request->input(), $jsonData);
 
         $this->token = $this->requestData('token') ? $this->requestData('token') : $this->requestData('session.sid');
 
-        $this->device['client'] = $request->header('device-client');
-        $this->device['code']   = $request->header('device-code');
-        $this->device['udid']   = $request->header('device-udid');
-        $this->device['sn']     = $request->header('device-sn');
-        $this->api_version      = $request->header('api-version');
-        $this->api_driver       = $request->header('api-driver');
+        $this->device['client'] = $this->request->header('device-client');
+        $this->device['code']   = $this->request->header('device-code');
+        $this->device['udid']   = $this->request->header('device-udid');
+        $this->device['sn']     = $this->request->header('device-sn');
+        $this->api_version      = $this->request->header('api-version');
+        $this->api_driver       = $this->request->header('api-driver');
 
-        if ($this->api_driver != 'local') {
-            RC_Api::api('stats', 'statsapi', array('api_name' => $request->input('url'), 'device' => $this->device));
-            RC_Api::api('mobile', 'device_record', array('device' => $this->device));
+        if ($this->api_driver == 'local') {
+            event(new ApiLocalRequestEvent($this));
+        }
+        else {
+            event(new ApiRemoteRequestEvent($this));
         }
 
     }

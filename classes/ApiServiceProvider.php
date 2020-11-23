@@ -46,6 +46,10 @@
 //
 namespace Ecjia\App\Api;
 
+use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
+use Ecjia\App\Api\Listeners\MobileDeviceRecordListener;
+use Ecjia\App\Api\Listeners\StatsApiListener;
+use RC_Event;
 use RC_Service;
 use Royalcms\Component\App\AppParentServiceProvider;
 
@@ -55,6 +59,8 @@ class ApiServiceProvider extends AppParentServiceProvider
     public function boot()
     {
         $this->package('ecjia/app-api');
+
+        $this->bootEvent();
     }
 
     public function register()
@@ -77,6 +83,12 @@ class ApiServiceProvider extends AppParentServiceProvider
             RC_Service::addService('admin_purview', 'api', 'Ecjia\App\Api\Services\AdminPurviewService');
             RC_Service::addService('admin_menu', 'api', 'Ecjia\App\Api\Services\AdminMenuService');
         }
+    }
+
+    protected function bootEvent()
+    {
+        RC_Event::listen(ApiRemoteRequestEvent::class, MobileDeviceRecordListener::class);
+        RC_Event::listen(ApiRemoteRequestEvent::class, StatsApiListener::class);
     }
 
 
