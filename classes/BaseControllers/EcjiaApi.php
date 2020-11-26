@@ -339,12 +339,16 @@ abstract class EcjiaApi extends EcjiaController
      */
     public function handleRequest()
     {
-        $response = $this->handle();
-        if (is_ecjia_error($response)) {
-            return new ApiResponse(new ApiError($response));
-        }
+        try {
+            $response = $this->handle();
+            if (is_ecjia_error($response)) {
+                return new ApiResponse(new ApiError($response));
+            }
 
-        return $response;
+            return $response;
+        } catch (\Exception $exception) {
+            return new ApiResponse(new ApiError($exception->getCode(), $exception->getMessage()));
+        }
     }
 
     /**
