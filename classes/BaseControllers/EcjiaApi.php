@@ -53,6 +53,7 @@ namespace Ecjia\App\Api\BaseControllers;
 use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\App\Api\Events\ApiLocalRequestEvent;
 use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
+use Ecjia\App\Api\Facades\ApiTransformer;
 use Ecjia\App\Api\Transformers\Transformer;
 use Ecjia\Component\ApiServer\Responses\ApiError;
 use Ecjia\Component\ApiServer\Responses\ApiResponse;
@@ -330,7 +331,7 @@ abstract class EcjiaApi extends EcjiaController
 
     public static function transformerData($type, $data)
     {
-        return Transformer::transformerData($type, $data);
+        return ApiTransformer::transformerData($type, $data);
     }
 
     /**

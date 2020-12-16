@@ -47,8 +47,18 @@
 namespace Ecjia\App\Api;
 
 use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
+use Ecjia\App\Api\Facades\ApiTransformer;
 use Ecjia\App\Api\Listeners\MobileDeviceRecordListener;
 use Ecjia\App\Api\Listeners\StatsApiListener;
+use Ecjia\App\Api\Transformers\AddressTransformer;
+use Ecjia\App\Api\Transformers\CategoryTransformer;
+use Ecjia\App\Api\Transformers\ConfigTransformer;
+use Ecjia\App\Api\Transformers\GoodsTransformer;
+use Ecjia\App\Api\Transformers\PhotoTransformer;
+use Ecjia\App\Api\Transformers\SignupFieldsTransformer;
+use Ecjia\App\Api\Transformers\SimpleGoodsTransformer;
+use Ecjia\App\Api\Transformers\SimpleOrderTransformer;
+use Ecjia\App\Api\Transformers\TransformerManager;
 use RC_Event;
 use RC_Service;
 use Royalcms\Component\App\AppParentServiceProvider;
@@ -61,11 +71,15 @@ class ApiServiceProvider extends AppParentServiceProvider
         $this->package('ecjia/app-api');
 
         $this->bootEvent();
+
+        $this->loadTransformers();
     }
 
     public function register()
     {
         $this->loadAlias();
+
+        $this->registerTransformer();
 
         $this->registerAppService();
     }
@@ -89,6 +103,25 @@ class ApiServiceProvider extends AppParentServiceProvider
     {
         RC_Event::listen(ApiRemoteRequestEvent::class, MobileDeviceRecordListener::class);
         RC_Event::listen(ApiRemoteRequestEvent::class, StatsApiListener::class);
+    }
+
+    protected function registerTransformer()
+    {
+        $this->royalcms->singleton('ecjia.api.transformer', function($royalcms) {
+            return new TransformerManager();
+        });
+    }
+
+    protected function loadTransformers()
+    {
+        ApiTransformer::registerTransformer('PHOTO', new PhotoTransformer());
+        ApiTransformer::registerTransformer('SIMPLEGOODS', new SimpleGoodsTransformer());
+        ApiTransformer::registerTransformer('ADDRESS', new AddressTransformer());
+        ApiTransformer::registerTransformer('SIGNUPFIELDS', new SignupFieldsTransformer());
+        ApiTransformer::registerTransformer('CONFIG', new ConfigTransformer());
+        ApiTransformer::registerTransformer('CATEGORY', new CategoryTransformer());
+        ApiTransformer::registerTransformer('SIMPLEORDER', new SimpleOrderTransformer());
+        ApiTransformer::registerTransformer('GOODS', new GoodsTransformer());
     }
 
 
