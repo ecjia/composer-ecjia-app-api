@@ -54,7 +54,10 @@
 namespace Ecjia\App\Api\Transformers;
 
 
-class SignupFieldsTransformer extends Transformer
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
+
+class SignupFieldsTransformer extends Transformer implements TransformerInterface
 {
 
 

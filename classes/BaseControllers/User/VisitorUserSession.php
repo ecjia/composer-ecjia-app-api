@@ -12,7 +12,7 @@ class VisitorUserSession
      */
     public function resetSession()
     {
-        if (! RC_Session::exists('user_id')) {
+        if (! (RC_Session::exists('session_user_id') && RC_Session::exists('session_user_type'))) {
             RC_Session::put('user_id', 0);
             RC_Session::put('user_name', '');
             RC_Session::put('email', '');

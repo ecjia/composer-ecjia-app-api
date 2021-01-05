@@ -53,9 +53,11 @@
 
 namespace Ecjia\App\Api\Transformers;
 
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
 use RC_Time;
 
-class GoodsTransformer extends Transformer
+class GoodsTransformer extends Transformer implements TransformerInterface
 {
 
     public function transformer($data)

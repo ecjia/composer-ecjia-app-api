@@ -47,6 +47,7 @@
 namespace Ecjia\App\Api\BaseControllers;
 
 use Ecjia\App\Api\BaseControllers\Traits\EcjiaApiTemplateTrait;
+use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
 use Ecjia\Component\Contracts\EcjiaTemplateFileLoader;
 use RC_Hook;
 use RC_Session;
@@ -84,6 +85,14 @@ abstract class EcjiaApiFrontController extends EcjiaApi implements EcjiaTemplate
         });
 
         RC_Session::start();
+    }
+
+    /**
+     * 游客状态也需要设置一下session值
+     */
+    protected function visitorSession()
+    {
+        (new VisitorUserSession)->resetSession();
     }
 
     /**

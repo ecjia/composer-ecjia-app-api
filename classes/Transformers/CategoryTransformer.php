@@ -54,7 +54,10 @@
 namespace Ecjia\App\Api\Transformers;
 
 
-class CategoryTransformer extends Transformer
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
+
+class CategoryTransformer extends Transformer implements TransformerInterface
 {
 
 

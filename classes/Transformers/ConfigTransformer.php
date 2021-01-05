@@ -54,7 +54,10 @@
 namespace Ecjia\App\Api\Transformers;
 
 
-class ConfigTransformer extends Transformer
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
+
+class ConfigTransformer extends Transformer implements TransformerInterface
 {
 
 

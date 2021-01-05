@@ -54,7 +54,10 @@
 namespace Ecjia\App\Api\Transformers;
 
 
-class AddressTransformer extends Transformer
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
+
+class AddressTransformer extends Transformer implements TransformerInterface
 {
 
 

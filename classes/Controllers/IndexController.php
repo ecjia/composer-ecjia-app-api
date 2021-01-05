@@ -72,8 +72,7 @@ class IndexController extends BasicController
             $request = royalcms('request');
             $response = (new ApiManager($request))->handleRequest();
         } catch (\Exception $exception) {
-            $error = new ecjia_error($exception->getCode(), $exception->getMessage());
-            $response = new ApiResponse($error);
+            $response = new ApiResponse(new ecjia_error(get_class($exception), $exception->getMessage()));
         } finally {
             royalcms()->instance('response', $response);
             return $response;

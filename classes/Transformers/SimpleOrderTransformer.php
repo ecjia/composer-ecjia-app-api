@@ -54,7 +54,10 @@
 namespace Ecjia\App\Api\Transformers;
 
 
-class SimpleOrderTransformer extends Transformer
+use Ecjia\Component\ApiTransformer\Contracts\TransformerInterface;
+use Ecjia\Component\ApiTransformer\Transformer;
+
+class SimpleOrderTransformer extends Transformer implements TransformerInterface
 {
 
 

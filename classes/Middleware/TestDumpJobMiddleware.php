@@ -14,14 +14,18 @@ class TestDumpJobMiddleware
     {
         $response = $next($request);
 
-        $server = $request->server(null, []);
-        $header = $request->header(null, []);
-        $query  = $request->query(null, []);
-        $data   = array_merge($server, $header, $query);
+        try {
+            $server = $request->server(null, []);
+            $header = $request->header(null, []);
+            $query  = $request->query(null, []);
+            $data   = array_merge($server, $header, $query);
 
-        TestDumpJob::dispatch($data);
-
-        return $response;
+            TestDumpJob::dispatch($data);
+        } catch (\Exception $exception) {
+            ecjia_log_error($exception);
+        } finally {
+            return $response;
+        }
     }
 
 }

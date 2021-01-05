@@ -47,7 +47,6 @@
 namespace Ecjia\App\Api;
 
 use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
-use Ecjia\App\Api\Facades\ApiTransformer;
 use Ecjia\App\Api\Listeners\MobileDeviceRecordListener;
 use Ecjia\App\Api\Listeners\StatsApiListener;
 use Ecjia\App\Api\Transformers\AddressTransformer;
@@ -58,7 +57,8 @@ use Ecjia\App\Api\Transformers\PhotoTransformer;
 use Ecjia\App\Api\Transformers\SignupFieldsTransformer;
 use Ecjia\App\Api\Transformers\SimpleGoodsTransformer;
 use Ecjia\App\Api\Transformers\SimpleOrderTransformer;
-use Ecjia\App\Api\Transformers\TransformerManager;
+use Ecjia\Component\ApiTransformer\ApiTransformerServiceProvider;
+use Ecjia\Component\ApiTransformer\Facades\ApiTransformer;
 use RC_Event;
 use RC_Service;
 use Royalcms\Component\App\AppParentServiceProvider;
@@ -77,9 +77,10 @@ class ApiServiceProvider extends AppParentServiceProvider
 
     public function register()
     {
-        $this->loadAlias();
+        //注册Api Transformer
+        $this->royalcms->register(ApiTransformerServiceProvider::class);
 
-        $this->registerTransformer();
+        $this->loadAlias();
 
         $this->registerAppService();
     }
@@ -105,12 +106,6 @@ class ApiServiceProvider extends AppParentServiceProvider
         RC_Event::listen(ApiRemoteRequestEvent::class, StatsApiListener::class);
     }
 
-    protected function registerTransformer()
-    {
-        $this->royalcms->singleton('ecjia.api.transformer', function($royalcms) {
-            return new TransformerManager();
-        });
-    }
 
     protected function loadTransformers()
     {

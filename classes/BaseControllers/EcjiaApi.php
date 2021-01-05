@@ -50,13 +50,12 @@
 
 namespace Ecjia\App\Api\BaseControllers;
 
-use Ecjia\App\Api\BaseControllers\User\VisitorUserSession;
+use Ecjia\App\Api\BaseControllers\Middleware\TransformErrorToResponseMiddleware;
 use Ecjia\App\Api\Events\ApiLocalRequestEvent;
 use Ecjia\App\Api\Events\ApiRemoteRequestEvent;
-use Ecjia\App\Api\Facades\ApiTransformer;
-use Ecjia\App\Api\Transformers\Transformer;
 use Ecjia\Component\ApiServer\Responses\ApiError;
 use Ecjia\Component\ApiServer\Responses\ApiResponse;
+use Ecjia\Component\ApiTransformer\Facades\ApiTransformer;
 use Ecjia\System\BaseController\EcjiaController;
 use RC_Hook;
 use ecjia_app;
@@ -99,6 +98,11 @@ abstract class EcjiaApi extends EcjiaController
         $this->visitorSession();
 
         $this->apiRequestProcess();
+
+        $middlewares = [
+            TransformErrorToResponseMiddleware::class, //转换ecjia_error类错误到响应
+        ];
+        $this->middleware($middlewares);
 
         RC_Hook::do_action('ecjia_api_finish_launching');
     }
@@ -155,7 +159,7 @@ abstract class EcjiaApi extends EcjiaController
      */
     protected function visitorSession()
     {
-        (new VisitorUserSession)->resetSession();
+        //
     }
 
     /**
@@ -345,10 +349,11 @@ abstract class EcjiaApi extends EcjiaController
             if (is_ecjia_error($response)) {
                 return new ApiResponse(new ApiError($response));
             }
-
-            return $response;
+            return new ApiResponse($response);
         } catch (\Exception $exception) {
-            return new ApiResponse(new ApiError($exception->getCode(), $exception->getMessage()));
+            return new ApiResponse(new ApiError(get_class($exception), $exception->getMessage()));
+        } catch (\Error $exception) {
+            return new ApiResponse(new ApiError(get_class($exception), $exception->getMessage()));
         }
     }
 
