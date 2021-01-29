@@ -19,7 +19,10 @@ class ApiHasFilterHookMiddleware
         if (RC_Hook::has_filter($url)) {
             $response = response();
             $response = RC_Hook::apply_filters($url, $response);
-            if ($response instanceof Response) {
+            if ($response instanceof ApiResponse) {
+
+            }
+            elseif ($response instanceof Response) {
                 $response = new ApiResponse($response->getOriginalContent());
             }
             elseif (is_array($response)) {
